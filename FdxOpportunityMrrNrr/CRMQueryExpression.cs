@@ -125,5 +125,18 @@ namespace FdxOpportunityMrrNrr
 
             return oppProduct;
         }
+
+        public static EntityCollection getSetUpFee(Guid _opportunityId, IOrganizationService _service)
+        {
+            FetchExpression query;
+            EntityCollection oppProd = new EntityCollection();
+
+            string OppProductQuery = "<fetch top='1' aggregate='true' ><entity name='opportunityproduct' ><attribute name='fdx_setupfee' alias='SetupFee' aggregate='sum' /><filter type='and' ><condition attribute='opportunityid' operator='eq' value='{0}' /></filter></entity></fetch>";
+
+            query = new FetchExpression(string.Format(OppProductQuery, _opportunityId));
+            oppProd = _service.RetrieveMultiple(query);
+
+            return oppProd;
+        }
     }
 }

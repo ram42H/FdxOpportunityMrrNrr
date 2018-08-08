@@ -32,6 +32,7 @@ namespace FdxOpportunityMrrNrr
                 Entity opportunityEntity = new Entity();
                 EntityCollection oppProductMRR = new EntityCollection();
                 EntityCollection oppProductNRR = new EntityCollection();
+                EntityCollection oppProductSetupFee = new EntityCollection();
                 Guid opportunityId = Guid.Empty;
 
                 try
@@ -60,6 +61,10 @@ namespace FdxOpportunityMrrNrr
                         step = 6;
                         oppProductNRR = CRMQueryExpression.getNRR(opportunityId, service);
 
+                        //Get Sum Set-up Fee....
+                        oppProductSetupFee = CRMQueryExpression.getSetUpFee(opportunityId, service);
+                        tracingService.Trace("Collection:- " + oppProductSetupFee);
+
                         //Update opportunity....
                         step = 7;
                         opportunityEntity = new Entity
@@ -83,6 +88,12 @@ namespace FdxOpportunityMrrNrr
                         }
 
                         step = 10;
+                        if(oppProductSetupFee.Entities.Count > 0)
+                        {
+                            step = 92;
+                            opportunityEntity["fdx_totalonetimefees"] = ((AliasedValue)oppProductSetupFee.Entities[0].Attributes["SetupFee"]).Value;
+                        }
+                        step = 11;
                         service.Update(opportunityEntity);
                     }
                 }

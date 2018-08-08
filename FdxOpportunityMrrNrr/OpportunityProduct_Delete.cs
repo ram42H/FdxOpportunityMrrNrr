@@ -40,6 +40,7 @@ namespace FdxOpportunityMrrNrr
                 Entity opportunityEntity = new Entity();
                 EntityCollection oppProductMRR = new EntityCollection();
                 EntityCollection oppProductNRR = new EntityCollection();
+                EntityCollection oppProductSetupFee = new EntityCollection();
                 Guid opportunityId = Guid.Empty;
 
                 try
@@ -84,6 +85,12 @@ namespace FdxOpportunityMrrNrr
                         if (oppProductNRR.Entities.Count > 0)
                             opportunityEntity["fdx_totalnrr"] = ((AliasedValue)oppProductNRR.Entities[0].Attributes["NRR"]).Value;
 
+                        step = 15;
+                        if (oppProductSetupFee.Entities.Count > 0)
+                        {
+                            step = 93;
+                            opportunityEntity["fdx_totalonetimefees"] = ((AliasedValue)oppProductSetupFee.Entities[0].Attributes["SetupFee"]).Value;
+                        }
                         step = 14;
                         service.Update(opportunityEntity);
                     }
