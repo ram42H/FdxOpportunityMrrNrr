@@ -63,6 +63,10 @@ namespace FdxOpportunityMrrNrr
                         step = 6;
                         oppProductNRR = CRMQueryExpression.getNRR(opportunityId, service);
 
+                        //Get Sum Set-up Fee....
+                        oppProductSetupFee = CRMQueryExpression.getSetUpFee(opportunityId, service);
+                        tracingService.Trace("SetUpFee:- " + oppProductSetupFee.Entities.Count);
+
                         //Update opportunity....
                         step = 7;
                         opportunityEntity = new Entity
