@@ -33,7 +33,7 @@ namespace FdxOpportunityMrrNrr
                 Entity opportunityEntity = new Entity();
                 EntityCollection oppProductMRR = new EntityCollection();
                 EntityCollection oppProductNRR = new EntityCollection();
-                EntityCollection oppProductSetupFee = new EntityCollection();
+                EntityCollection oppProductSetupNet = new EntityCollection();
                 Guid opportunityId = Guid.Empty;
 
                 try
@@ -64,8 +64,8 @@ namespace FdxOpportunityMrrNrr
                         oppProductNRR = CRMQueryExpression.getNRR(opportunityId, service);
 
                         //Get Sum Set-up Fee....
-                        oppProductSetupFee = CRMQueryExpression.getSetUpFee(opportunityId, service);
-                        tracingService.Trace("SetUpFee:- " + oppProductSetupFee.Entities.Count);
+                        oppProductSetupNet = CRMQueryExpression.getSetUpFee(opportunityId, service);
+                        tracingService.Trace("SetUpFee:- " + oppProductSetupNet.Entities.Count);
 
                         //Update opportunity....
                         step = 7;
@@ -84,10 +84,10 @@ namespace FdxOpportunityMrrNrr
                             opportunityEntity["fdx_totalnrr"] = ((AliasedValue)oppProductNRR.Entities[0].Attributes["NRR"]).Value;
 
                         step = 11;
-                        if (oppProductSetupFee.Entities.Count > 0)
+                        if (oppProductSetupNet.Entities.Count > 0)
                         {
                             step = 94;
-                            opportunityEntity["fdx_totalonetimefees"] = ((AliasedValue)oppProductSetupFee.Entities[0].Attributes["SetupFee"]).Value;
+                            opportunityEntity["fdx_totalonetimefees"] = ((AliasedValue)oppProductSetupNet.Entities[0].Attributes["SetupNet"]).Value;
                         }
 
                         step = 10;

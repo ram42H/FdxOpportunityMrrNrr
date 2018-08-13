@@ -131,7 +131,7 @@ namespace FdxOpportunityMrrNrr
             FetchExpression query;
             EntityCollection oppProd = new EntityCollection();
 
-            string OppProductQuery = "<fetch top='1' aggregate='true' ><entity name='opportunityproduct' ><attribute name='fdx_setupfee' alias='SetupFee' aggregate='sum' /><filter type='and' ><condition attribute='opportunityid' operator='eq' value='{0}' /></filter></entity></fetch>";
+            string OppProductQuery = "<fetch top='1' aggregate='true' ><entity name='opportunityproduct' ><attribute name='fdx_setupnet' alias='SetupNet' aggregate='sum' /><filter type='and' ><condition attribute='opportunityid' operator='eq' value='{0}' /></filter></entity></fetch>";
 
             query = new FetchExpression(string.Format(OppProductQuery, _opportunityId));
             oppProd = _service.RetrieveMultiple(query);
